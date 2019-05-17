@@ -26,15 +26,18 @@ def get_link_api (n, label):
     }
     ses = requests.Session()
     resp  = ses.get(url_api_stack,params=params)
-    if resp.status_code == 200:
-        items = resp.json().get('items')
+    try:
+        if resp.status_code == 200:
+            items = resp.json().get('items')
         for item in items:
-            print('Title : ',item['title'])
-            id = item['accepted_answer_id']
-            print('Link top Answer : {}/{}#{}'.format(item['link'],id,id))
-            print('----------------------------------------\n')
-    else: 
-        print
+                print('Title : ',item['title'])
+                id = item['accepted_answer_id']
+                print('Link top Answer : {}/{}#{}'.format(item['link'],id,id))
+                print('----------------------------------------\n')
+        else: 
+            print('error code : {}'.format(resp.status_code))
+    except KeyError:
+        print('Link top answer : Not command is Title !')
 
 
 def solve():
